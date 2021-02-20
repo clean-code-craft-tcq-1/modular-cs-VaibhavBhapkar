@@ -6,83 +6,39 @@ using System.Text;
 namespace TelCo.ColorCoder
 {
     class ColorCoderPairs
-    {
-        private static Color[] colorMapMajor;
-        private static Color[] colorMapMinor;
-        static ColorCoderPairs()
-        {
-            colorMapMajor = new Color[] { Color.White, Color.Red, Color.Black, Color.Yellow, Color.Violet };
-            colorMapMinor = new Color[] { Color.Blue, Color.Orange, Color.Green, Color.Brown, Color.SlateGray };
-        }
+    {   
         public static ColorPair GetColorFromPairNumber(int pairNumber)
-        {
-            // The function supports only 1 based index. Pair numbers valid are from 1 to 25
-            int minorSize = colorMapMinor.Length;
-            int majorSize = colorMapMajor.Length;
-            int maxPairNumber = minorSize * majorSize;
-            if (pairNumber < 1 || pairNumber > maxPairNumber)
+        {           
+            if (pairNumber < 1 || pairNumber > ColorDetails.maxPairNumber)
             {
-                throw new ArgumentOutOfRangeException(
-                    string.Format("Argument PairNumber:{0} is outside the allowed range", pairNumber));
+                throw new ArgumentOutOfRangeException(string.Format("Argument PairNumber:{0} is outside the allowed range", pairNumber));
             }
-
-            // Find index of major and minor color from pair number
             int zeroBasedPairNumber = pairNumber - 1;
-            int majorIndex = zeroBasedPairNumber / minorSize;
-            int minorIndex = zeroBasedPairNumber % minorSize;
-
-            // Construct the return val from the arrays
-            ColorPair pair = new ColorPair()
-            {
-                majorColor = colorMapMajor[majorIndex],
-                minorColor = colorMapMinor[minorIndex]
-            };
-                        
+            int majorIndex = zeroBasedPairNumber / ColorDetails.minorSize;
+            int minorIndex = zeroBasedPairNumber % ColorDetails.minorSize;
+            ColorPair pair = new ColorPair(ColorDetails.colorMapMajor[majorIndex], ColorDetails.colorMapMinor[minorIndex]);                                 
             return pair;
         }
-
         public static int GetPairNumberFromColor(ColorPair pair)
         {
-            int majorIndex = FindMajorNumberFromColor(pair);
-            int minorIndex = FindMinorNumberFromColor(pair);
-
-            // If colors can not be found throw an exception
+            int majorIndex = ColorDetails.FindMajorNumberFromColor(pair);
+            int minorIndex = ColorDetails.FindMinorNumberFromColor(pair);
             if (majorIndex == -1 || minorIndex == -1)
             {
-                throw new ArgumentException(
-                    string.Format("Unknown Colors: {0}", pair.ToString()));
+                throw new ArgumentException(string.Format("Unknown Colors: {0}", pair.ToString()));
             }
-
             // Compute pair number and Return  
             // (Note: +1 in compute is because pair number is 1 based, not zero)
-            return (majorIndex * colorMapMinor.Length) + (minorIndex + 1);
-        }
-
-        public static int FindMajorNumberFromColor(ColorPair pair)
+            return (majorIndex * ColorDetails.minorSize) + (minorIndex + 1);
+        } 
+        public static void PrintColorCodePairs()
         {
-            int majorIndex = -1;
-            for (int i = 0; i < colorMapMajor.Length; i++)
+            Console.WriteLine("Please find color code manual below, \n");
+            for (int i=1;i<=25;i++)
             {
-                if (colorMapMajor[i] == pair.majorColor)
-                {
-                    majorIndex = i;
-                    break;
-                }
+                ColorPair colorPairByNumber= GetColorFromPairNumber(i);
+                Console.WriteLine("Pair Number: {0},Colors: {1}\n", i, colorPairByNumber);
             }
-            return majorIndex;
-        }
-        public static int FindMinorNumberFromColor(ColorPair pair)
-        {
-            int minorIndex = -1;
-            for (int i = 0; i < colorMapMinor.Length; i++)
-            {
-                if (colorMapMinor[i] == pair.minorColor)
-                {
-                    minorIndex = i;
-                    break;
-                }
-            }
-            return minorIndex;
         }
     }
 }
