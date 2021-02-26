@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
 
 namespace TelCo.ColorCoder
 {
-    class ColorPairHelper
+    class ColorPairMapper
     {
         ColorPair colorPair = new ColorPair();        
         public ColorPair GetColorFromPairNumber(int pairNumber)
