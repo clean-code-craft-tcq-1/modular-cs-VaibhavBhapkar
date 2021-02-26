@@ -28,14 +28,6 @@ namespace TelCo.ColorCoder
             // Compute pair number and Return(Note: +1 in compute is because pair number is 1 based, not zero)  
             return (majorIndex * colorPair.minorSize) + (minorIndex + 1);
         } 
-        public void PrintColorCodePairs()
-        {
-            Console.WriteLine("Please find color code manual below, \n");
-            for (int i=1;i<=25;i++)
-            {
-                ColorPair colorPairByNumber= GetColorFromPairNumber(i);
-                Console.WriteLine("Pair Number: {0},Colors: {1}\n", i, colorPairByNumber);
-            }
-        }
+        
     }
 }

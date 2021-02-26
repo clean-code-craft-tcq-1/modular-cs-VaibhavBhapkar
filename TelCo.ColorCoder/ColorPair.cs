@@ -31,13 +31,6 @@ namespace TelCo.ColorCoder
         {
             return string.Format("MajorColor:{0}, MinorColor:{1}", majorColor.Name, minorColor.Name);
         }
-        public void DisplayColorFromPairNumber(ColorPair colorPair,int pairNumber)
-        {
-            Console.WriteLine("[In]Pair Number: {0},[Out] Colors: {1}\n", pairNumber, colorPair);
-        }
-        public void DisplayPairNumberFromColor(ColorPair colorPair, int pairNumber)
-        {
-            Console.WriteLine("[In]Colors: {0}, [Out] PairNumber: {1}\n", colorPair, pairNumber);
-        }
+       
     }
 }
